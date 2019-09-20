@@ -18,7 +18,7 @@ class NowShowingMovieAdapter(private val context: Context,
                              private val movies: List<Movie>): RecyclerView.Adapter<NowShowingMovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        LayoutInflater.from(context).inflate(R.layout.row_upcoming_movies, parent, false).let {
+        LayoutInflater.from(context).inflate(R.layout.row_movies, parent, false).let {
             return MovieViewHolder(it)
         }
     }

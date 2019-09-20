@@ -1,63 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        tools:context=".ui.MainActivity">
+        android:layout_height="match_parent">
 
-    <ImageView
-            android:id="@+id/ivBackground"
-            android:scaleType="centerCrop"
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
 
-    <TextView
-            android:textStyle="bold"
-            android:paddingStart="@dimen/margin_normal"
-            android:paddingEnd="@dimen/margin_normal"
-            android:paddingTop="@dimen/margin_normal"
-            android:id="@+id/tvHeader"
-            android:textSize="@dimen/text_size_big"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Now Showing"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:fontFamily="@font/alfa_slab_one"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovies"
-            android:padding="@dimen/margin_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHeader"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"/>
+            <ImageView
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/ivBackground"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-    <TextView
-            android:paddingStart="@dimen/margin_normal"
-            android:paddingEnd="@dimen/margin_normal"
-            android:paddingTop="@dimen/margin_normal"
-            android:id="@+id/tvUpComing"
-            android:textSize="@dimen/text_size_normal"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upcoming"
-            android:textStyle="normal"
-            app:layout_constraintTop_toBottomOf="@+id/rvMovies"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:fontFamily="@font/alfa_slab_one"/>
+            <TextView
+                    android:textStyle="bold"
+                    android:paddingStart="@dimen/margin_normal"
+                    android:paddingEnd="@dimen/margin_normal"
+                    android:paddingTop="@dimen/margin_normal"
+                    android:id="@+id/tvHeader"
+                    android:textSize="@dimen/text_size_big"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Now Showing"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="@font/alfa_slab_one"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUpcoming"
-            android:padding="@dimen/margin_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUpComing"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMovies"
+                    android:padding="@dimen/margin_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:paddingStart="@dimen/margin_normal"
+                    android:paddingEnd="@dimen/margin_normal"
+                    android:id="@+id/tvUpComing"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upcoming"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@+id/rvMovies"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:fontFamily="@font/alfa_slab_one"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvUpcoming"
+                    android:padding="@dimen/margin_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvUpComing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

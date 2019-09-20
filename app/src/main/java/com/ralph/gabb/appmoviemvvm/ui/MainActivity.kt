@@ -3,7 +3,9 @@ package com.ralph.gabb.appmoviemvvm.ui
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.base.BaseActivity
 import com.ralph.gabb.appmoviemvvm.data.Movie
@@ -34,6 +36,11 @@ class MainActivity : BaseActivity(), MainViewInteractor {
         setUpBackground()
     }
 
+    private fun setUpUI() {
+        setUpRecyclerView(rvMovies, false)
+        setUpRecyclerView(rvUpcoming, true)
+    }
+
     private fun setUpBackground() {
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg")
@@ -51,9 +58,10 @@ class MainActivity : BaseActivity(), MainViewInteractor {
             })
     }
 
-    private fun setUpUI() {
-        rvMovies.setHasFixedSize(true)
-        rvMovies.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    private fun setUpRecyclerView(recyclerView: RecyclerView, isGrid: Boolean) {
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = if (!isGrid) LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        else GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
     }
 
     private fun startObserving() = CoroutineScope(Dispatchers.Main).launch {

@@ -10,6 +10,8 @@ import com.ralph.gabb.appmoviemvvm.data.Movie
 import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_movies.view.*
+import kotlinx.android.synthetic.main.row_movies.view.ivImage
+import kotlinx.android.synthetic.main.row_upcoming_movies.view.*
 
 /**
  * Created by Ralph Gabrielle Orden on 9/20/2019.
@@ -18,7 +20,7 @@ class UpcomingMovieAdapter(private val context: Context,
                            private val movies: List<Movie>): RecyclerView.Adapter<UpcomingMovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        LayoutInflater.from(context).inflate(R.layout.row_movies, parent, false).let {
+        LayoutInflater.from(context).inflate(R.layout.row_upcoming_movies, parent, false).let {
             return MovieViewHolder(it)
         }
     }
@@ -27,8 +29,9 @@ class UpcomingMovieAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
+
         holder.insertImage(BASE_IMAGE + movie.posterPath)
-        plantLog(BASE_IMAGE + movie.posterPath)
+        holder.displayTitle(movie.originalTitle)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -37,6 +40,10 @@ class UpcomingMovieAdapter(private val context: Context,
             Picasso.get()
                 .load(url)
                 .into(itemView.ivImage)
+        }
+
+        fun displayTitle(title: String) {
+            itemView.tvTitle.text = title
         }
     }
 
