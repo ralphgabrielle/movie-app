@@ -1,4 +1,4 @@
-package com.ralph.gabb.appmoviemvvm.ui
+package com.ralph.gabb.appmoviemvvm.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.data.Movie
-import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_movies.view.*
 
@@ -15,7 +14,9 @@ import kotlinx.android.synthetic.main.row_movies.view.*
  * Created by Ralph Gabrielle Orden on 9/20/2019.
  */
 class NowShowingMovieAdapter(private val context: Context,
-                             private val movies: List<Movie>): RecyclerView.Adapter<NowShowingMovieAdapter.MovieViewHolder>() {
+                             private val movies: List<Movie>,
+                             private val selectMovie: SelectMovie
+): RecyclerView.Adapter<NowShowingMovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         LayoutInflater.from(context).inflate(R.layout.row_movies, parent, false).let {
@@ -28,7 +29,8 @@ class NowShowingMovieAdapter(private val context: Context,
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
         holder.insertImage(BASE_IMAGE + movie.posterPath)
-        plantLog(BASE_IMAGE + movie.posterPath)
+
+        holder.addMovieEvent(selectMovie, movie)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -37,6 +39,12 @@ class NowShowingMovieAdapter(private val context: Context,
             Picasso.get()
                 .load(url)
                 .into(itemView.ivImage)
+        }
+
+        fun addMovieEvent(selectMovie: SelectMovie, movie: Movie) {
+            itemView.ivImage.setOnClickListener {
+                selectMovie.onSelectMovie(movie)
+            }
         }
     }
 

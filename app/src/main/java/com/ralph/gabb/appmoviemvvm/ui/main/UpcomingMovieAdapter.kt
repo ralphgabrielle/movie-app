@@ -1,4 +1,4 @@
-package com.ralph.gabb.appmoviemvvm.ui
+package com.ralph.gabb.appmoviemvvm.ui.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.data.Movie
-import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.row_movies.view.*
 import kotlinx.android.synthetic.main.row_movies.view.ivImage
 import kotlinx.android.synthetic.main.row_upcoming_movies.view.*
 
@@ -17,7 +15,9 @@ import kotlinx.android.synthetic.main.row_upcoming_movies.view.*
  * Created by Ralph Gabrielle Orden on 9/20/2019.
  */
 class UpcomingMovieAdapter(private val context: Context,
-                           private val movies: List<Movie>): RecyclerView.Adapter<UpcomingMovieAdapter.MovieViewHolder>() {
+                           private val movies: List<Movie>,
+                           private val selectMovie: SelectMovie
+): RecyclerView.Adapter<UpcomingMovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         LayoutInflater.from(context).inflate(R.layout.row_upcoming_movies, parent, false).let {
@@ -32,6 +32,7 @@ class UpcomingMovieAdapter(private val context: Context,
 
         holder.insertImage(BASE_IMAGE + movie.posterPath)
         holder.displayTitle(movie.originalTitle)
+        holder.addMovieEvent(selectMovie, movie)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,6 +45,12 @@ class UpcomingMovieAdapter(private val context: Context,
 
         fun displayTitle(title: String) {
             itemView.tvTitle.text = title
+        }
+
+        fun addMovieEvent(selectMovie: SelectMovie, movie: Movie) {
+            itemView.ivImage.setOnClickListener {
+                selectMovie.onSelectMovie(movie)
+            }
         }
     }
 

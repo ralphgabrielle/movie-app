@@ -1,4 +1,4 @@
-package com.ralph.gabb.appmoviemvvm.ui
+package com.ralph.gabb.appmoviemvvm.ui.main
 
 import com.ralph.gabb.appmoviemvvm.base.BaseViewModel
 import com.ralph.gabb.appmoviemvvm.data.repository.MovieRepository

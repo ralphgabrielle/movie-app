@@ -1,4 +1,4 @@
-package com.ralph.gabb.appmoviemvvm.ui
+package com.ralph.gabb.appmoviemvvm.ui.main
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
-class MainActivity : BaseActivity(), MainViewInteractor {
+class MainActivity : BaseActivity(), MainViewInteractor, SelectMovie {
 
     private val viewModel: MainViewModel by viewModel()
 
@@ -80,10 +80,16 @@ class MainActivity : BaseActivity(), MainViewInteractor {
     }
 
     private fun displayNowShowingMovies(result: List<Movie>) {
-        rvMovies.adapter = NowShowingMovieAdapter(this, result)
+        rvMovies.adapter = NowShowingMovieAdapter(this, result, this)
     }
 
     private fun displayUpcomingMovies(result: List<Movie>) {
-        rvUpcoming.adapter = UpcomingMovieAdapter(this, result)
+        rvUpcoming.adapter = UpcomingMovieAdapter(this, result, this)
+    }
+
+    override fun onSelectMovie(movie: Movie) {
+        //
+        // Open Detail Movie Window
+        //
     }
 }
