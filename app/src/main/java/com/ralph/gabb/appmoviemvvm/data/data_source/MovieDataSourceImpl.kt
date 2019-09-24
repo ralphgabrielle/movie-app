@@ -17,6 +17,7 @@ class MovieDataSourceImpl(private var movieService: MovieService): MovieDataSour
 
     override suspend fun fetchNowShowingMovies(): LiveData<out MovieResult> {
         val movies = movieService.fetchNowShowingMovies()
+
         fetchedNowShowingMovies.postValue(movies)
         return fetchedNowShowingMovies
     }
