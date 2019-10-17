@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.data.Movie
+import com.ralph.gabb.appmoviemvvm.util.Constant.BASE_IMAGE
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_movies.view.*
 
@@ -28,27 +30,27 @@ class NowShowingMovieAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
-        holder.insertImage(BASE_IMAGE + movie.posterPath)
 
-        holder.addMovieEvent(selectMovie, movie)
+        holder.displayDetails(movie, selectMovie)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun insertImage(url: String) {
+        fun displayDetails(movie: Movie, selectMovie: SelectMovie) {
+            insertImage(BASE_IMAGE + movie.posterPath)
+            addMovieEvent(selectMovie, movie)
+        }
+
+        private fun insertImage(url: String) {
             Picasso.get()
                 .load(url)
                 .into(itemView.ivImage)
         }
 
-        fun addMovieEvent(selectMovie: SelectMovie, movie: Movie) {
+        private fun addMovieEvent(selectMovie: SelectMovie, movie: Movie) {
             itemView.ivImage.setOnClickListener {
-                selectMovie.onSelectMovie(movie)
+                selectMovie.onSelectMovie(movie, it as ImageView)
             }
         }
-    }
-
-    companion object {
-        const val BASE_IMAGE = "https://image.tmdb.org/t/p/w500"
     }
 }

@@ -20,6 +20,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
+import android.content.Intent
+import androidx.core.app.ActivityOptionsCompat
+import android.widget.ImageView
+import com.ralph.gabb.appmoviemvvm.ui.details.MovieDetailActivity
+import org.jetbrains.anko.startActivity
+
 
 class MainActivity : BaseActivity(), SelectMovie {
 
@@ -98,9 +104,18 @@ class MainActivity : BaseActivity(), SelectMovie {
         rvUpcoming.adapter = UpcomingMovieAdapter(this, result, this)
     }
 
-    override fun onSelectMovie(movie: Movie) {
+    override fun onSelectMovie(movie: Movie, imageView: ImageView) {
         //
         // Open Detail Movie Window
         //
+//
+//        val activityOptionsCompat =
+//            ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, getString(R.string.transition_image))
+//        val intent = Intent(this, MovieDetailActivity::class.java)
+//        startActivity(intent, activityOptionsCompat.toBundle())
+
+        startActivity<MovieDetailActivity>(
+            "movie" to Gson().toJson(movie)
+        )
     }
 }
