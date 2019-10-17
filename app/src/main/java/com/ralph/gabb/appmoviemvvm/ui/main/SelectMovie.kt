@@ -1,5 +1,6 @@
 package com.ralph.gabb.appmoviemvvm.ui.main
 
+import android.widget.ImageView
 import com.ralph.gabb.appmoviemvvm.data.Movie
 
 /**
@@ -7,6 +8,6 @@ import com.ralph.gabb.appmoviemvvm.data.Movie
  */
 interface SelectMovie {
 
-    fun onSelectMovie(movie: Movie)
+    fun onSelectMovie(movie: Movie, imageView : ImageView)
 
 }
