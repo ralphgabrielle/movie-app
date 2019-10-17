@@ -3,6 +3,7 @@ package com.ralph.gabb.appmoviemvvm.data.data_source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.ralph.gabb.appmoviemvvm.data.MockApi
 import com.ralph.gabb.appmoviemvvm.data.MovieResult
 import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.ralph.gabb.appmoviemvvm.network.MovieService
@@ -14,6 +15,14 @@ class MovieDataSourceImpl(private var movieService: MovieService): MovieDataSour
 
     private val fetchedNowShowingMovies = MutableLiveData<MovieResult>()
     private val fetchedUpcomingMovies = MutableLiveData<MovieResult>()
+    private val fetchedMockApi = MutableLiveData<MockApi>()
+
+    override suspend fun mockApi(): LiveData<out MockApi> {
+        val mockApi = movieService.mockApi()
+
+        fetchedMockApi.postValue(mockApi)
+        return fetchedMockApi
+    }
 
     override suspend fun fetchNowShowingMovies(): LiveData<out MovieResult> {
         val movies = movieService.fetchNowShowingMovies()

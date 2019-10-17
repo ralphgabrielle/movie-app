@@ -6,10 +6,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.base.BaseActivity
 import com.ralph.gabb.appmoviemvvm.data.Movie
-import com.ralph.gabb.appmoviemvvm.interactor.MainViewInteractor
 import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.ralph.gabb.appmoviemvvm.util.BlurBuilder
 import com.squareup.picasso.Picasso
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
-class MainActivity : BaseActivity(), MainViewInteractor, SelectMovie {
+class MainActivity : BaseActivity(), SelectMovie {
 
     private val viewModel: MainViewModel by viewModel()
 
@@ -29,8 +29,6 @@ class MainActivity : BaseActivity(), MainViewInteractor, SelectMovie {
         get() = R.layout.activity_main
 
     override fun viewCreated() {
-        viewModel.setViewInteractor(this)
-
         setUpUI()
         startObserving()
         setUpBackground()
@@ -45,9 +43,9 @@ class MainActivity : BaseActivity(), MainViewInteractor, SelectMovie {
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w500/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg")
             .into(object : Target {
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) { }
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) { }
+                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
 
                 override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                     plantLog("onBitmapLoaded")
@@ -65,18 +63,31 @@ class MainActivity : BaseActivity(), MainViewInteractor, SelectMovie {
     }
 
     private fun startObserving() = CoroutineScope(Dispatchers.Main).launch {
-        val nowShowingMovies = viewModel.nowShowingMovies.await()
-        val upcomingMovies = viewModel.upcomingMovies.await()
+        try {
+//            val mockApi = viewModel.mockApi.await()
 
-        nowShowingMovies.observe(this@MainActivity, Observer { nowShowing ->
-            if (nowShowing == null) return@Observer
-            displayNowShowingMovies(nowShowing.results)
-        })
+//            mockApi.observe(this@MainActivity, Observer {
+//                if (it == null) return@Observer
+//
+//                plantLog(Gson().toJson(it))
+//            })
 
-        upcomingMovies.observe(this@MainActivity, Observer { upcoming ->
-            if (upcoming == null) return@Observer
-            displayUpcomingMovies(upcoming.results)
-        })
+            val nowShowingMovies = viewModel.nowShowingMovies.await()
+            val upcomingMovies = viewModel.upcomingMovies.await()
+
+            nowShowingMovies.observe(this@MainActivity, Observer { nowShowing ->
+                if (nowShowing == null) return@Observer
+                displayNowShowingMovies(nowShowing.results)
+            })
+
+            upcomingMovies.observe(this@MainActivity, Observer { upcoming ->
+                if (upcoming == null) return@Observer
+                displayUpcomingMovies(upcoming.results)
+            })
+
+        } catch (e: Exception) {
+            plantLog("Ralph Testing - " + e.message)
+        }
     }
 
     private fun displayNowShowingMovies(result: List<Movie>) {

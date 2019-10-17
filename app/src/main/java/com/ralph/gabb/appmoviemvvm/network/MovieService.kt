@@ -1,5 +1,6 @@
 package com.ralph.gabb.appmoviemvvm.network
 
+import com.ralph.gabb.appmoviemvvm.data.MockApi
 import com.ralph.gabb.appmoviemvvm.data.MovieResult
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -13,6 +14,9 @@ import java.util.concurrent.TimeUnit
  */
 
 interface MovieService {
+
+    @GET("5d9c071d3100002a002fc37e")
+    suspend fun mockApi(): MockApi
 
     @GET("movie/now_playing")
     suspend fun fetchNowShowingMovies(@Query("api_key") key: String = API_KEY,
@@ -41,6 +45,7 @@ interface MovieService {
 
         const val API_KEY = "410d39161bfac88a09d369676a329852"
         const val BASE_URL = "https://api.themoviedb.org/3/"
+//        private const val MOCK_URL = "http://www.mocky.io/v2/"
     }
 
 }
