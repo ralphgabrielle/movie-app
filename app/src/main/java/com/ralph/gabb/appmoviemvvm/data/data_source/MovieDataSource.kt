@@ -1,6 +1,7 @@
 package com.ralph.gabb.appmoviemvvm.data.data_source
 
 import androidx.lifecycle.LiveData
+import com.ralph.gabb.appmoviemvvm.data.MockApi
 import com.ralph.gabb.appmoviemvvm.data.MovieResult
 
 /**
@@ -11,4 +12,6 @@ interface MovieDataSource {
     suspend fun fetchNowShowingMovies(): LiveData<out MovieResult>
 
     suspend fun fetchUpcomingMovies(): LiveData<out MovieResult>
+
+    suspend fun mockApi(): LiveData<out MockApi>
 }
