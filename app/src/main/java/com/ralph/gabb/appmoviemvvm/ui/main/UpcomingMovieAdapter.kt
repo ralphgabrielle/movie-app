@@ -41,6 +41,9 @@ class UpcomingMovieAdapter(private val context: Context,
 
         fun insertImage(url: String) {
             Picasso.get()
+                .setIndicatorsEnabled(true)
+
+            Picasso.get()
                 .load(url)
                 .into(itemView.ivImage)
         }

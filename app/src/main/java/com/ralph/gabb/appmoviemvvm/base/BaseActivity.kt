@@ -1,7 +1,5 @@
 package com.ralph.gabb.appmoviemvvm.base
 
-import android.content.BroadcastReceiver
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.DrawableRes
@@ -28,10 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
     @get:StringRes
     protected open val toolbarTitleId: Int? = null
 
-    protected open val hasBroadcastReceiver: Boolean = false
-
-    private var receiver: BroadcastReceiver? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         layoutId?.let {
@@ -39,12 +33,9 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         initToolbar()
+
         viewCreated()
     }
-
-    protected open fun onBroadcastMessageReceived(intent: Intent) { }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
