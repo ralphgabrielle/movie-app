@@ -1,5 +1,6 @@
 package com.ralph.gabb.appmoviemvvm.ui.main
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.Observer
@@ -20,11 +21,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
-import android.content.Intent
-import androidx.core.app.ActivityOptionsCompat
 import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import com.ralph.gabb.appmoviemvvm.ui.details.MovieDetailActivity
-import org.jetbrains.anko.startActivity
 
 
 class MainActivity : BaseActivity(), SelectMovie {
@@ -74,7 +73,6 @@ class MainActivity : BaseActivity(), SelectMovie {
 
 //            mockApi.observe(this@MainActivity, Observer {
 //                if (it == null) return@Observer
-//
 //                plantLog(Gson().toJson(it))
 //            })
 
@@ -109,13 +107,22 @@ class MainActivity : BaseActivity(), SelectMovie {
         // Open Detail Movie Window
         //
 //
-//        val activityOptionsCompat =
-//            ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, getString(R.string.transition_image))
-//        val intent = Intent(this, MovieDetailActivity::class.java)
-//        startActivity(intent, activityOptionsCompat.toBundle())
+        val activityOptionsCompat =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, getString(R.string.transition_image))
 
-        startActivity<MovieDetailActivity>(
-            "movie" to Gson().toJson(movie)
-        )
+        Intent(this, MovieDetailActivity::class.java).let {
+            it.putExtra("movie", Gson().toJson(movie))
+            startActivity(it, activityOptionsCompat.toBundle())
+        }
+
+//        val fade = Fade()
+//        fade.excludeTarget(android.R.id.statusBarBackground, true)
+//        fade.excludeTarget(android.R.id.navigationBarBackground, true)
+//        window.exitTransition = fade
+//        window.enterTransition = fade
+
+//        startActivity<MovieDetailActivity>(
+//            "movie" to Gson().toJson(movie)
+//        )
     }
 }

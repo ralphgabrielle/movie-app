@@ -8,7 +8,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ralph.gabb.appmoviemvvm.R
 import com.ralph.gabb.appmoviemvvm.data.Movie
+import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import com.ralph.gabb.appmoviemvvm.util.Constant.BASE_IMAGE
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_movies.view.*
 
@@ -30,7 +33,6 @@ class NowShowingMovieAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
-
         holder.displayDetails(movie, selectMovie)
     }
 
@@ -42,6 +44,11 @@ class NowShowingMovieAdapter(private val context: Context,
         }
 
         private fun insertImage(url: String) {
+            plantLog("Ralph Testing $url")
+
+            Picasso.get()
+                .setIndicatorsEnabled(true)
+
             Picasso.get()
                 .load(url)
                 .into(itemView.ivImage)
