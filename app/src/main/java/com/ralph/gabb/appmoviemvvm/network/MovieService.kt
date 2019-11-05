@@ -2,7 +2,9 @@ package com.ralph.gabb.appmoviemvvm.network
 
 import com.ralph.gabb.appmoviemvvm.data.MockApi
 import com.ralph.gabb.appmoviemvvm.data.MovieResult
+import com.ralph.gabb.appmoviemvvm.internal.plantLog
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -29,7 +31,14 @@ interface MovieService {
     companion object {
         operator fun invoke(): MovieService {
 
+            val interceptor = HttpLoggingInterceptor { message ->
+                plantLog("retrofit log: $message")
+            }
+
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+
             val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(interceptor)
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
